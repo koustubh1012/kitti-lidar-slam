@@ -1,0 +1,26 @@
+name: kitti_slam
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # --- Core ---
+  - python=3.10
+  - pip
+  - numpy
+  - scipy
+  - matplotlib
+  - pyyaml
+  - tqdm
+
+  # --- SLAM / Optimization ---
+  - gtsam
+
+  # --- Optional utilities ---
+  - ipython
+
+  # --- Pip-only packages ---
+  - pip:
+      - kiss-icp
+      - evo
+      - polyscope==2.2.1
