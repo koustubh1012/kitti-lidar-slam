@@ -5,7 +5,7 @@ import gtsam
 from gtsam import Pose3, Rot3, Point3
 
 SEQ = sys.argv[1] if len(sys.argv) > 1 else "00"
-RUN_DIR = Path(__file__).parent
+RUN_DIR = Path(__file__).resolve().parents[1]
 EST_FILE = RUN_DIR / "outputs" / SEQ / "latest" / f"{SEQ}_poses_kitti.txt"
 
 # Function to laod KITTI poses

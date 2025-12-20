@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 import sys
 
-KITTI_ROOT = Path(__file__).parent
+KITTI_ROOT = Path(__file__).resolve().parents[1]
 SEQ = sys.argv[1] if len(sys.argv) > 1 else "00"
 
 
