@@ -3,9 +3,9 @@ import subprocess
 from pathlib import Path
 import sys
 
-KITTI_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 SEQ = sys.argv[1] if len(sys.argv) > 1 else "00"
-
+KITTI_DATA_ROOT = Path(os.environ.get("KITTI_DATA_ROOT", REPO_ROOT))
 
 def generate_odometry_kiss_icp(sequence: str):
     """
@@ -42,7 +42,7 @@ def generate_odometry_kiss_icp(sequence: str):
         None
     """
     # Prepare Output Directory
-    output_path = KITTI_ROOT / "outputs" / SEQ
+    output_path = REPO_ROOT / "outputs" / SEQ
     output_path.mkdir(parents=True, exist_ok=True)
     # Set Output Directory environment Variable
     os.environ["kiss_icp_out_dir"] = str(output_path)
@@ -52,7 +52,7 @@ def generate_odometry_kiss_icp(sequence: str):
         "kiss_icp_pipeline",
         "--dataloader", "kitti",
         "--sequence", SEQ,
-        str(KITTI_ROOT)
+        str(KITTI_DATA_ROOT)
     ]
 
     # Execute the command
