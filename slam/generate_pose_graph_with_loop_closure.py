@@ -161,23 +161,38 @@ def find_loop_candidates(Ts_gt: np.ndarray, radius_m=5.0, min_separation=200, ma
     return loops
 
 def add_loop_factors(graph, Ts_gt: np.ndarray, loops, loop_noise):
+    """
+    Add loop closure factors to the pose graph.
+    Args:
+        graph: gtsam.NonlinearFactorGraph to add factors to.
+        Ts_gt (np.ndarray): Ground truth poses of shape (N, 4, 4).
+        loops: List of tuples (i, j, distance) indicating loop closures.
+        loop_noise: gtsam noise model for loop closure factors.
+    Returns:        None
+    """
+    # Add loop closure factors
     for (i, j, dist) in loops:
+        # Compute relative transform from GT poses
         pj = homogeneous_to_pose3(Ts_gt[j])
         pi = homogeneous_to_pose3(Ts_gt[i])
         Tji = pj.between(pi)  # relative transform from j -> i (from GT)
+        # Add Between Factor
         graph.add(gtsam.BetweenFactorPose3(X(j), X(i), Tji, loop_noise))
 
 
 
 if __name__ == "__main__":
+    # Load Estimated Poses
     Ts = load_kitti_poses(SEQ)
     print(f"Loaded {Ts.shape[0]} poses for sequence {SEQ}.")
 
+    # Build and Optimize Pose Graph with Loop Closures
     result, N = build_and_optimize_pose_graph(Ts)
 
-    # out_file = RUN_DIR / "outputs" / SEQ / "latest" / f"{SEQ}_optimized_kitti.txt"
+    # Save Optimized Poses in KITTI Format
     out_file = RUN_DIR / "outputs" / SEQ / "latest" / f"{SEQ}_loop_optimized_kitti.txt"
 
+    # Write optimized poses to file
     with open(out_file, "w") as f:
         for i in range(N):
             row = pose3_to_kitti_row(result.atPose3(X(i)))
