@@ -58,10 +58,21 @@ def pose3_to_kitti_row(pose: Pose3) -> np.ndarray:
     return row
 
 def build_and_optimize_pose_graph(Ts: np.ndarray):
+    """
+    Build and optimize a pose graph using GTSAM.
+    Args:
+        Ts (np.ndarray): Array of shape (N, 4, 4) containing the poses.
+    Returns:
+        gtsam.Values: Optimized poses.
+        int: Number of poses.
+    """
+    # Build Pose Graph
     N = Ts.shape[0]
     graph = gtsam.NonlinearFactorGraph()
+    # Initialize the initial estimate
     initial_estimate = gtsam.Values()
 
+    # Define Noise Models
     prior_noise = gtsam.noiseModel.Diagonal.Sigmas(
         np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1])
     )
@@ -69,6 +80,7 @@ def build_and_optimize_pose_graph(Ts: np.ndarray):
         np.array([0.2, 0.2, 0.2, 0.1, 0.1, 0.1])
     )
 
+    # Add Factors and Initial Estimates
     for i in range(N):
         pose = homogeneous_to_pose3(Ts[i])
         initial_estimate.insert(i, pose)
