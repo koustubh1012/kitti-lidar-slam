@@ -1,0 +1,14 @@
+RPE w.r.t. translation part (m)
+for delta = {self.delta} ({self.delta_unit.value}) using consecutive pairs
+(with SE(3) Umeyama alignment)
+
+       max	0.316732
+      mean	0.026790
+    median	0.022447
+       min	0.001067
+      rmse	0.034188
+       sse	5.306515
+       std	0.021240
+
+Plot saved to /home/koustubh/Downloads/kiiti-lidar-slam/outputs/00/latest/plots/rpe_00_odom_raw.png
+Plot saved to /home/koustubh/Downloads/kiiti-lidar-slam/outputs/00/latest/plots/rpe_00_odom_map.png

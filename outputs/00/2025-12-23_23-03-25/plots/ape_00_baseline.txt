@@ -1,0 +1,13 @@
+APE w.r.t. translation part (m)
+(with SE(3) Umeyama alignment)
+
+       max	9.679709
+      mean	3.017211
+    median	2.531625
+       min	0.849727
+      rmse	3.500719
+       sse	55650.092184
+       std	1.775237
+
+Plot saved to /home/koustubh/Downloads/kiiti-lidar-slam/outputs/00/latest/plots/ape_00_baseline_raw.png
+Plot saved to /home/koustubh/Downloads/kiiti-lidar-slam/outputs/00/latest/plots/ape_00_baseline_map.png
